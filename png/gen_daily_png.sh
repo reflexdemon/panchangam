@@ -7,13 +7,14 @@ fi
 nPages=367
 start_date=`date --date "$2"`
 name=`basename $1 | sed 's/\([0-9]\)-.*/\1/'`
-echo Subject,Start Date,Start Time,End Date,End Time,Location > $name.csv
+echo Subject,Start Date,Start Time,End Date,End Time,Location > $name-PanchangamImage.csv
 mkdir -p $name/daily
 k=1
 while [ $k -le $nPages ]
 do
-pdftoppm "$1" $name/daily/"`printf "%03d" $k`" -png -rx 300 -ry 300 -f $(( k+1 )) -singlefile
-echo `date --date "$start_date +$((k-1)) days" "+%d %B %Y"`,`date --date "$start_date +$((k-2)) days" "+%d-%m-%y"`,20:00,`date --date "$start_date +$((k-2)) days" "+%d-%m-%y"`,20:30,https://github.com/karthikraman/panchangam/raw/master/png/$name/daily/`printf "%03d" $k`.png >> $name.csv
+## Change k+3 appropriately based on pages spent on navanayaka etc.
+pdftoppm "$1" $name/daily/"`printf "%03d" $k`" -png -rx 300 -ry 300 -f $(( k+14 )) -singlefile
+echo `date --date "$start_date +$((k-1)) days" "+%d %B %Y"`,`date --date "$start_date +$((k-2)) days" "+%d-%m-%y"`,20:00,`date --date "$start_date +$((k-2)) days" "+%d-%m-%y"`,20:30,https://github.com/karthikraman/panchangam/raw/master/png/$name/daily/`printf "%03d" $k`.png >> $name-PanchangaImage.csv
 k=$(( k+1 ))
 echo -ne .
 if [[ $(( k%20 )) -eq 0 ]]
