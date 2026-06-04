@@ -5,15 +5,13 @@ then
     exit 1
 fi
 nPages=`pdfinfo "$1" | grep Pages | sed 's/[^0-9]*//'`
-pngpref="${1/-festival-tweet-images-devangari.pdf/-fest-tweet}"
-pngpref="${pngpref/*\//}"
-echo $pngpref
 name=`basename $1 | sed 's/\([0-9]\)-.*/\1/'`
-mkdir -p $name
+echo Folder: $name
+mkdir -p $name/fest-tweet/
 k=1
 while [ $k -le $nPages ]
 do
-pdftoppm "$1" $name/$pngpref-"`printf "%04d" $k`" -png -rx 300 -ry 300 -f $(( k+1 )) -singlefile
+pdftoppm "$1" $name/fest-tweet/"`printf "%04d" $k`" -png -rx 300 -ry 300 -f $(( k+1 )) -singlefile
 k=$(( k+1 ))
 echo -ne .
 if [[ $(( k%20 )) -eq 0 ]]
